@@ -1,36 +1,9 @@
 import { Box, Button, Text, TextField, Image } from "@skynexui/components";
+import React from 'react'
+import {useRouter} from 'next/router';
 import appConfig from "../config.json";
 
-function GlobalStyle() {
-  return (
-    <style global jsx>{`
-      * {
-        padding: 0;
-        margin: 0;
-        box-sizing: border-box;
-      }
-      html,
-      body,
-      #__next{
-        height: 100vh;
-        font-family: sans-serif;
-        display: flex;
-        flex: 1;
-      }
-    }
-    #__next {
-      flex: 1;
-    }
-    #__next > * {
-      flex: 1;
-    }
-      /* ./App fit Height */
-    `}</style>
-  );
-}
-
 function Titulo(props) {
-  console.log(props.children);
   const Tag = props.Tag || 'h1';
   return (
     <>
@@ -46,29 +19,16 @@ function Titulo(props) {
   );
 }
 
-// componente react
-// function HomePage() {
-//     return (
-//         <div>
-//             <GlobalStyle />
-//             <Titulo Tag="h2">Boa vindas de Volta!</Titulo>
-//             <h3>Discord Alura Matrix</h3>
-//         </div>
-//     )
-//   }
-
-//   export default HomePage
-
 export default function PaginaInicial() {
-    const username = 'Guilherme Souza';
-  
+    // const username = 'MASguilherme';
+    const [username, setUsername] = React.useState('')
+    const roteamento = useRouter()
     return (
       <>
-        <GlobalStyle />
         <Box
           styleSheet={{
             display: 'flex', alignItems: 'center', justifyContent: 'center', width:'100%',  
-            backgroundColor: appConfig.theme.colors.primary[300],
+            backgroundColor: appConfig.theme.colors.primary[500],
             backgroundImage: 'url(https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg)',
             backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
           }}
@@ -85,30 +45,52 @@ export default function PaginaInicial() {
               width: '100%', maxWidth: '700px',
               borderRadius: '5px', padding: '32px', margin: '16px',
               boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
-              backgroundColor: appConfig.theme.colors.neutrals[900],
+              backgroundColor: appConfig.theme.colors.neutrals[400],
             }}
           >
             {/* Formulário */}
             <Box
               as="form"
+              onSubmit={function(infosEvento){
+                infosEvento.preventDefault();
+                console.log('alguém clicou em enviar')
+                roteamento.push('/chat')
+              }}
               styleSheet={{
                 display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
                 width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
               }}
             >
-              <Titulo tag="h2">Boas vindas de volta!</Titulo>
-              <Text variant="body3" styleSheet={{ marginBottom: '32px', color: appConfig.theme.colors.neutrals[300] }}>
-                <h5>Aluracor - Guilherme Souza </h5>
+              <Titulo tag="h2">Pesquise seu usuário GitHub</Titulo>
+              <Text variant="body3" styleSheet={{ marginBottom: '32px', color: appConfig.theme.colors.neutrals[400] }}>
+                <h5>Aluracor - {username} </h5>
               </Text>
-  
+              
+              {/* <input type="text" 
+              value={username} 
+              onChange={function(event){
+                console.log('usuario digitou',event.target.value)
+                // onde tá o valor?
+                const valor = event.target.value
+                // Trocar o valor da variavel pelo React
+                setUsername(valor)
+              }}/> */}
               <TextField
                 fullWidth
+                value={username}
+                onChange={function(event){
+                  console.log('usuario digitou',event.target.value)
+                  // onde tá o valor?
+                  const valor = event.target.value
+                  // Trocar o valor da variavel pelo React
+                  setUsername(valor)
+                }}
                 textFieldColors={{
                   neutral: {
                     textColor: appConfig.theme.colors.neutrals[200],
-                    mainColor: appConfig.theme.colors.neutrals[900],
+                    mainColor: appConfig.theme.colors.neutrals[200],
                     mainColorHighlight: appConfig.theme.colors.primary[500],
-                    backgroundColor: appConfig.theme.colors.neutrals[800],
+                    backgroundColor: appConfig.theme.colors.neutrals[500],
                   },
                 }}
               />
@@ -118,9 +100,9 @@ export default function PaginaInicial() {
                 fullWidth
                 buttonColors={{
                   contrastColor: appConfig.theme.colors.neutrals["000"],
-                  mainColor: appConfig.theme.colors.primary[500],
+                  mainColor: appConfig.theme.colors.primary[400],
                   mainColorLight: appConfig.theme.colors.primary[400],
-                  mainColorStrong: appConfig.theme.colors.primary[600],
+                  mainColorStrong: appConfig.theme.colors.primary[200],
                 }}
               />
             </Box>
