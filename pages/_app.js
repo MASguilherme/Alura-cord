@@ -9,7 +9,7 @@ function GlobalStyle() {
         html,
         body,
         #__next{
-          height: 100vh;
+          height: 100%;
           font-family: sans-serif;
           display: flex;
           flex: 1;
